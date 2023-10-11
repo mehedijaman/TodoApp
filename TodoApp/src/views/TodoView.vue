@@ -22,26 +22,32 @@
         :key="todo.id"
         class="flex justify-between items-center mb-2 p-2 bg-gray-100 border"
       >
-        <input
-          type="radio"
-          v-model="todo.done"
-          @change="handleTodoStatusChange(todo)"
-          class="mr-2"
-        />
-        <span>{{ todo.text }}</span>
+        <div>
+          <span>{{ todo.text }}</span>
+          <p class="text-xs text-gray-500">{{ formatDate(todo.created_at) }}</p>
+        </div>
         <button @click="handleRemoveTodo(todo.id)" class="text-red-500">
           Remove
         </button>
+        <button @click="handleSetBacklog(todo)" class="text-blue-500">
+          Backlog
+        </button>
       </li>
     </ul>
-    <h2 class="text-2xl font-bold mb-2">Done</h2>
+    <h2 class="text-xl font-bold mb-2 mt-8">Backlog</h2>
     <ul>
       <li
-        v-for="(todo, index) in doneTodos"
-        :key="index"
-        class="flex justify-between items-center mb-2 p-2 bg-green-100 border"
+        v-for="todo in backlog"
+        :key="todo.id"
+        class="flex justify-between items-center mb-2 p-2 bg-gray-100 border"
       >
-        <span>{{ index + 1 }} Done - {{ todo.text }}</span>
+        <div>
+          <span>{{ todo.text }}</span>
+          <p class="text-xs text-gray-500">{{ formatDate(todo.created_at) }}</p>
+        </div>
+        <button @click="handleRemoveBacklog(todo.id)" class="text-red-500">
+          Remove
+        </button>
       </li>
     </ul>
   </div>
@@ -52,11 +58,13 @@ import { ref, watch } from "vue";
 import { useTodos } from "@/stores/todos";
 
 const newTodoText = ref("");
-const { todos, addTodo, removeTodo } = useTodos();
+const { todos, backlog, addTodo, removeTodo, addToBacklog, removeBacklog } =
+  useTodos();
 
 const handleAddTodo = () => {
   if (newTodoText.value.trim() !== "") {
-    addTodo(newTodoText.value);
+    const created_at = new Date().toLocaleString();
+    addTodo({ text: newTodoText.value, created_at, state: "todo" });
     newTodoText.value = "";
   }
 };
@@ -66,20 +74,35 @@ const handleRemoveTodo = (id: number) => {
   removeTodo(id);
 };
 
-const handleTodoStatusChange = (todo) => {
-  if (todo.done) {
-    // Move todo to done section
-    todos.value = todos.value.filter((t) => t !== todo);
-    todo.text = todo.text; // Modify the text if needed
-    doneTodos.value.push(todo);
-  }
+const handleSetBacklog = (todo) => {
+  console.log(`Setting todo with ID ${todo.id} to backlog`);
+  addToBacklog(todo);
 };
 
-const doneTodos = ref([]);
+const handleRemoveBacklog = (id: number) => {
+  console.log(`Removing backlog todo with ID ${id}`);
+  removeBacklog(id);
+};
+
+const formatDate = (dateString: string) => {
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  return new Date(dateString).toLocaleDateString("en-US", options);
+};
 
 // Watch for changes in todos
 watch(todos, (newTodos) => {
   console.log("Updated todos:", newTodos);
+});
+
+// Watch for changes in backlog
+watch(backlog, (newBacklog) => {
+  console.log("Updated backlog:", newBacklog);
 });
 </script>
 
