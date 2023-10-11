@@ -34,7 +34,9 @@ export const useTodos = defineStore("todos", {
       this.backlog = this.backlog.filter((todo) => todo.id !== id);
     },
     removeCompletedTodos(id: number) {
-      this.backlog = this.completedTodos.filter((todo) => todo.id !== id);
+      this.completedTodos = this.completedTodos.filter(
+        (todo) => todo.id !== id
+      );
     },
 
     moveToTodos(todo: Todo) {
