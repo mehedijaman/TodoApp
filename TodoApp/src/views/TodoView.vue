@@ -17,6 +17,21 @@
       </button>
     </div>
     <ul>
+      <!-- Display Completed Todos -->
+      <li
+        v-for="todo in completedTodos"
+        :key="todo.id"
+        class="flex justify-between items-center mb-2 p-2 bg-green-100 border"
+      >
+        <div>
+          <span
+            ><s>{{ todo.text }}</s></span
+          >
+          <p class="text-xs text-gray-500">{{ formatDate(todo.created_at) }}</p>
+        </div>
+      </li>
+
+      <!-- Display Active Todos -->
       <li
         v-for="todo in todos"
         :key="todo.id"
@@ -32,21 +47,8 @@
         <button @click="handleSetBacklog(todo)" class="text-blue-500">
           Backlog
         </button>
-      </li>
-    </ul>
-    <h2 class="text-xl font-bold mb-2 mt-8">Backlog</h2>
-    <ul>
-      <li
-        v-for="todo in backlog"
-        :key="todo.id"
-        class="flex justify-between items-center mb-2 p-2 bg-gray-100 border"
-      >
-        <div>
-          <span>{{ todo.text }}</span>
-          <p class="text-xs text-gray-500">{{ formatDate(todo.created_at) }}</p>
-        </div>
-        <button @click="handleRemoveBacklog(todo.id)" class="text-red-500">
-          Remove
+        <button @click="handleMarkAsCompleted(todo)" class="text-green-500">
+          Mark as Completed
         </button>
       </li>
     </ul>
@@ -58,8 +60,16 @@ import { ref, watch } from "vue";
 import { useTodos } from "@/stores/todos";
 
 const newTodoText = ref("");
-const { todos, backlog, addTodo, removeTodo, addToBacklog, removeBacklog } =
-  useTodos();
+const {
+  todos,
+  backlog,
+  completedTodos,
+  addTodo,
+  removeTodo,
+  addToBacklog,
+  removeBacklog,
+  markAsCompleted,
+} = useTodos();
 
 const handleAddTodo = () => {
   if (newTodoText.value.trim() !== "") {
@@ -79,9 +89,9 @@ const handleSetBacklog = (todo) => {
   addToBacklog(todo);
 };
 
-const handleRemoveBacklog = (id: number) => {
-  console.log(`Removing backlog todo with ID ${id}`);
-  removeBacklog(id);
+const handleMarkAsCompleted = (todo) => {
+  console.log(`Marking todo with ID ${todo.id} as completed`);
+  markAsCompleted(todo);
 };
 
 const formatDate = (dateString: string) => {

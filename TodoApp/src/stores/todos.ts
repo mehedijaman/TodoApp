@@ -1,21 +1,19 @@
-// todos.js
+// todos.ts
 
 import { defineStore } from "pinia";
 
+interface Todo {
+  id: number;
+  text: string;
+  created_at: string;
+  state: string;
+}
+
 export const useTodos = defineStore("todos", {
   state: () => ({
-    todos: [] as {
-      id: number;
-      text: string;
-      created_at: string;
-      state: string;
-    }[],
-    backlog: [] as {
-      id: number;
-      text: string;
-      created_at: string;
-      state: string;
-    }[],
+    todos: [] as Todo[],
+    backlog: [] as Todo[],
+    completedTodos: [] as Todo[], // New array for completed todos
   }),
   actions: {
     addTodo(todo: { text: string; created_at: string; state: string }) {
@@ -27,7 +25,7 @@ export const useTodos = defineStore("todos", {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
 
-    addToBacklog(todo) {
+    addToBacklog(todo: Todo) {
       this.backlog.push(todo);
       this.removeTodo(todo.id);
     },
@@ -36,9 +34,15 @@ export const useTodos = defineStore("todos", {
       this.backlog = this.backlog.filter((todo) => todo.id !== id);
     },
 
-    moveToTodos(todo) {
+    moveToTodos(todo: Todo) {
       this.todos.push(todo);
       this.removeBacklog(todo.id);
+    },
+
+    // Action to mark a todo as completed
+    markAsCompleted(todo: Todo) {
+      this.completedTodos.push(todo);
+      this.removeTodo(todo.id);
     },
   },
 });
