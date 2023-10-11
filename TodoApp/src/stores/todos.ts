@@ -33,12 +33,19 @@ export const useTodos = defineStore("todos", {
     removeBacklog(id: number) {
       this.backlog = this.backlog.filter((todo) => todo.id !== id);
     },
+    removeCompletedTodos(id: number) {
+      this.backlog = this.completedTodos.filter((todo) => todo.id !== id);
+    },
 
     moveToTodos(todo: Todo) {
       this.todos.push(todo);
       this.removeBacklog(todo.id);
     },
-
+    markAsIncomplete(todo: Todo) {
+      console.log("Marking as incomplete:", todo);
+      this.todos.push(todo);
+      this.removeCompletedTodos(todo.id);
+    },
     // Action to mark a todo as completed
     markAsCompleted(todo: Todo) {
       this.completedTodos.push(todo);

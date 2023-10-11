@@ -16,6 +16,7 @@
         Add
       </button>
     </div>
+    <div class="mb-4">Completed Todos: {{ numCompletedTodos }}</div>
     <ul>
       <!-- Display Completed Todos -->
       <li
@@ -29,6 +30,9 @@
           >
           <p class="text-xs text-gray-500">{{ formatDate(todo.created_at) }}</p>
         </div>
+        <button @click="handleMarkAsIncomplete(todo)" class="text-blue-500">
+          Mark as Incomplete
+        </button>
       </li>
 
       <!-- Display Active Todos -->
@@ -56,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useTodos } from "@/stores/todos";
 
 const newTodoText = ref("");
@@ -69,6 +73,7 @@ const {
   addToBacklog,
   removeBacklog,
   markAsCompleted,
+  markAsIncomplete, // New function to mark as incomplete
 } = useTodos();
 
 const handleAddTodo = () => {
@@ -94,6 +99,11 @@ const handleMarkAsCompleted = (todo) => {
   markAsCompleted(todo);
 };
 
+const handleMarkAsIncomplete = async (todo) => {
+  console.log(`Marking todo with ID ${todo.id} as incomplete`);
+  await markAsIncomplete(todo);
+};
+
 const formatDate = (dateString: string) => {
   const options = {
     year: "numeric",
@@ -104,6 +114,8 @@ const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
+
+const numCompletedTodos = computed(() => completedTodos.length);
 
 // Watch for changes in todos
 watch(todos, (newTodos) => {
