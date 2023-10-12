@@ -91,8 +91,10 @@
 
 <script setup lang="ts">
 import { useTodos } from "@/stores/todos";
+import { ref, watch } from "vue";
 const {
   filteredBacklog,
+  filterBacklog,
   sortedBacklog,
   setSearchTerm,
   setSortField,
@@ -102,12 +104,12 @@ const {
 import { storeToRefs } from "pinia";
 const { backlog } = storeToRefs(useTodos());
 
-const handleSearch = (event) => {
-  setSearchTerm(event.target.value);
-};
+const searchTerm = ref("");
+
 const handleMoveToList = (todo) => {
   moveToTodos(todo);
 };
+
 const handleSortByDate = () => {
   setSortField("date");
   sortBacklog();
@@ -117,6 +119,14 @@ const handleSortByName = () => {
   setSortField("name");
   sortBacklog();
 };
+
+watch(searchTerm, (newSearchTerm) => {
+  setSearchTerm(newSearchTerm);
+  if (!newSearchTerm.trim()) {
+    filterBacklog();
+  }
+  filterBacklog();
+});
 </script>
 
 <style scoped>
