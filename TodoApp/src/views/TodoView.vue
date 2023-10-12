@@ -109,7 +109,7 @@ watch(backlog, (newBacklog) => {
         <!-- / Accordion -->
         <hr>
     
-        <div v-for="(todo, index) in todos" :key="index" class="mb-10">          
+        <div v-for="(todo, index) in todos" :key="index" class="mb-10 flex justify-between">          
           <span @click="handleMarkAsCompleted(todo)" class="flex items-center rounded cursor-pointer hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
               <path fill-rule="evenodd" d="M17.303 5.197A7.5 7.5 0 006.697 15.803a.75.75 0 01-1.061 1.061A9 9 0 1121 10.5a.75.75 0 01-1.5 0c0-1.92-.732-3.839-2.197-5.303zm-2.121 2.121a4.5 4.5 0 00-6.364 6.364.75.75 0 11-1.06 1.06A6 6 0 1118 10.5a.75.75 0 01-1.5 0c0-1.153-.44-2.303-1.318-3.182zm-3.634 1.314a.75.75 0 01.82.311l5.228 7.917a.75.75 0 01-.777 1.148l-2.097-.43 1.045 3.9a.75.75 0 01-1.45.388l-1.044-3.899-1.601 1.42a.75.75 0 01-1.247-.606l.569-9.47a.75.75 0 01.554-.68z" clip-rule="evenodd" />
@@ -121,14 +121,15 @@ watch(backlog, (newBacklog) => {
             </span>
           </span>
 
-          <button :id="`dropdownMenuIconHorizontalButton-${index}`" :data-dropdown-toggle="`dropdownDotsHorizontal-${index}`" class="inline-flex items-center absolute right-0 p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
+          
+          <button :id="`dropDownMenuBtn-${index}`" :data-dropdown-toggle="`dropdownDotsHorizontal-${index}`" class="inline-flex items-end p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
               <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
             </svg>
           </button>
           <!-- Dropdown menu -->
           <div :id="`dropdownDotsHorizontal-${index}`" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`dropdownMenuIconHorizontalButton-${index}`">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`dropDownMenuBtn-${index}`">
                 <li>
                   <a @click.prevent="handleRemoveTodo(todo.id)" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
                 </li>
@@ -138,6 +139,7 @@ watch(backlog, (newBacklog) => {
               </ul>
           </div>
         </div>
+
 
 
         <form enctype="multipart/form-data" class="w-full grid grid-cols-12 gap-2 mt-10 fixed bottom-2">
