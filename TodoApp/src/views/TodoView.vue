@@ -167,11 +167,11 @@ const toggleDropdown = (index: number) => {
         </div>
 
         <form enctype="multipart/form-data" class="max-w-lg w-full grid grid-cols-12 gap-2 mt-10 fixed bottom-2">
-            <div class="col-span-10">
+            <div class="col-span-6">
                 <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-full p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
             </div>
-            <div class="col-span-2 flex items-center">
-                <input @click.prevent="handleAddTodo" class="px-2 py-2 bg-[#005FBC] text-white rounded-md hover:bg-[#0080FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
+            <div class="col-span-4 flex items-center">
+                <input @click.prevent="handleAddTodo" class="p-2 w-full bg-[#005FBC] text-white rounded-md hover:bg-[#0080FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
             </div>
         </form> 
       </div>
