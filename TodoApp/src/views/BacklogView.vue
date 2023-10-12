@@ -55,12 +55,12 @@
     <div
       v-for="(todo, index) in filteredBacklog"
       :key="index"
-      class="mb-10 flex justify-between"
+      class="mb-2 flex justify-between"
     >
       <span class="flex items-center rounded cursor-pointer hover:bg-gray-100">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6 text-blue-600"
+          class="w-4 h-4 text-blue-600"
           viewBox="0 0 512 512"
         >
           <path
@@ -69,8 +69,8 @@
         </svg>
 
         <span>
-          <span class="ml-4 text-sm">{{ todo.text }}</span>
-          <p class="text-xs text-gray-500 px-4">
+          <span class="ml-4 text-[15px]" >{{ todo.text }}</span>
+          <p class="text-[10px] text-gray-500 px-4">
             {{ formatDate(todo.created_at) }}
           </p>
         </span>
