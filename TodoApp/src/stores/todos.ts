@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, reactive, computed } from "vue";
+import { reactive } from "vue";
 
 interface Todo {
   id: number;
@@ -15,19 +15,8 @@ export const useTodos = defineStore("todos", {
     searchTerm: "",
     sortField: "",
   }),
-  getters: {
-    filteredBacklog(): Todo[] {
-      return this.backlog.filter((todo) =>
-        todo.text.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    },
-  },
+
   actions: {
-    filterBacklog() {
-      this.backlog = this.backlog.filter((todo) =>
-        todo.text.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    },
     sortBacklog() {
       if (this.sortField === "date") {
         this.backlog = this.backlog

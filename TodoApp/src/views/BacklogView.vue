@@ -51,9 +51,9 @@
     </button>
   </form>
 
-  <div v-if="backlog.length">
+  <div v-if="filteredBacklog.length">
     <div
-      v-for="(todo, index) in backlog"
+      v-for="(todo, index) in filteredBacklog"
       :key="index"
       class="mb-10 flex justify-between"
     >
@@ -90,16 +90,9 @@
 
 <script setup lang="ts">
 import { useTodos } from "@/stores/todos";
-import { ref, watch } from "vue";
-const {
-  filteredBacklog,
-  filterBacklog,
-  sortedBacklog,
-  setSearchTerm,
-  setSortField,
-  moveToTodos,
-  sortBacklog,
-} = useTodos();
+import { ref, watch, computed } from "vue";
+const { filterBacklog, setSearchTerm, setSortField, moveToTodos, sortBacklog } =
+  useTodos();
 import { storeToRefs } from "pinia";
 const { backlog } = storeToRefs(useTodos());
 
@@ -119,14 +112,6 @@ const handleSortByName = () => {
   sortBacklog();
 };
 
-watch(searchTerm, (newSearchTerm) => {
-  setSearchTerm(newSearchTerm);
-  if (!newSearchTerm.trim()) {
-    filterBacklog();
-  }
-  filterBacklog();
-});
-
 const formatDate = (dateString: string) => {
   const options = {
     year: "numeric",
@@ -137,6 +122,12 @@ const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
+
+const filteredBacklog = computed(() => {
+  return backlog.value.filter((todo) =>
+    todo.text.toLowerCase().includes(searchTerm.value.toLowerCase())
+  );
+});
 </script>
 
 <style scoped>
