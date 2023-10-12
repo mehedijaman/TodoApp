@@ -1,7 +1,6 @@
-// todos.ts
-
 import { defineStore } from "pinia";
-import { reactive, computed } from "vue";
+import {ref,reactive, computed } from 'vue';
+
 
 interface Todo {
   id: number;
@@ -13,7 +12,7 @@ export const useTodos = defineStore("todos", {
   state: () => ({
     todos: reactive([] as Todo[]),
     backlog: reactive([] as Todo[]),
-    completedTodos: reactive([] as Todo[]),
+    completedTodos: reactive([] as Todo[]), // New array for completed todos
     searchTerm: "",
     sortField: "",
   }),
@@ -62,9 +61,13 @@ export const useTodos = defineStore("todos", {
       this.todos.push({ id: randomId, ...todo });
     },
     removeTodo(id: number) {
+      const index = this.todos.findIndex(todo => todo.id == id);
+      this.todos.splice(index, 1);
       console.log(id, "is deleted");
-      this.todos = this.todos.filter((todo) => todo.id !== id);
-      console.log(this.todos);
+
+      // const newList = this.todos.filter((todo) => todo.id !== id);
+      // console.log(newList);
+      // Object.assign(this.todos, newList);
     },
     addToBacklog(todo: Todo) {
       this.backlog.push(todo);
@@ -82,5 +85,13 @@ export const useTodos = defineStore("todos", {
       this.completedTodos.push(todo);
       this.removeTodo(todo.id);
     },
+
+    markAsPending(todo: Todo) {
+      this.todos.push(todo);
+
+      const index = this.completedTodos.findIndex(item => item.id == todo.id);
+      this.completedTodos.splice(index, 1);
+    }
+    
   },
 });
