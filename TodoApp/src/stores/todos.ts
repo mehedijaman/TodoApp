@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import {ref,reactive, computed } from 'vue';
-
+import { reactive } from "vue";
 
 interface Todo {
   id: number;
@@ -16,28 +15,7 @@ export const useTodos = defineStore("todos", {
     searchTerm: "",
     sortField: "",
   }),
-  getters: {
-    filteredBacklog(): Todo[] {
-      return this.backlog.filter((todo) =>
-        todo.text.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    },
-    sortedBacklog(): Todo[] {
-      if (this.sortField === "date") {
-        console.log(this.sortField);
-        return this.backlog
-          .slice()
-          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-      } else if (this.sortField === "name") {
-        console.log(this.sortField);
-        return this.backlog
-          .slice()
-          .sort((a, b) => a.text.localeCompare(b.text));
-      } else {
-        return this.backlog.slice();
-      }
-    },
-  },
+
   actions: {
     sortBacklog() {
       if (this.sortField === "date") {
@@ -61,7 +39,7 @@ export const useTodos = defineStore("todos", {
       this.todos.push({ id: randomId, ...todo });
     },
     removeTodo(id: number) {
-      const index = this.todos.findIndex(todo => todo.id == id);
+      const index = this.todos.findIndex((todo) => todo.id == id);
       this.todos.splice(index, 1);
       console.log(id, "is deleted");
 
@@ -89,9 +67,8 @@ export const useTodos = defineStore("todos", {
     markAsPending(todo: Todo) {
       this.todos.push(todo);
 
-      const index = this.completedTodos.findIndex(item => item.id == todo.id);
+      const index = this.completedTodos.findIndex((item) => item.id == todo.id);
       this.completedTodos.splice(index, 1);
-    }
-    
+    },
   },
 });

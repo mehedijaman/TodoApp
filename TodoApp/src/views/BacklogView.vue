@@ -51,20 +51,36 @@
     </button>
   </form>
 
-  <div v-if="backlog.length">
-    <div v-for="(todo, index) in backlog" :key="index" class="mb-10 flex justify-between">          
-      <span  class="flex items-center rounded cursor-pointer hover:bg-gray-100">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600" viewBox="0 0 512 512">
-          <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+  <div v-if="filteredBacklog.length">
+    <div
+      v-for="(todo, index) in filteredBacklog"
+      :key="index"
+      class="mb-10 flex justify-between"
+    >
+      <span class="flex items-center rounded cursor-pointer hover:bg-gray-100">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6 text-blue-600"
+          viewBox="0 0 512 512"
+        >
+          <path
+            d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+          />
         </svg>
 
         <span>
           <span class="ml-4 text-sm">{{ todo.text }}</span>
-          <p class="text-xs text-gray-500 px-4"> {{ formatDate(todo.created_at) }}</p>
+          <p class="text-xs text-gray-500 px-4">
+            {{ formatDate(todo.created_at) }}
+          </p>
         </span>
       </span>
 
-      <button @click="() => handleMoveToList(todo)"  class="p-2 text-sm font-medium text-center text-blue-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+      <button
+        @click="() => handleMoveToList(todo)"
+        class="p-2 text-sm font-medium text-center text-blue-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        type="button"
+      >
         Move to List
       </button>
     </div>
@@ -74,23 +90,18 @@
 
 <script setup lang="ts">
 import { useTodos } from "@/stores/todos";
-const {
-  filteredBacklog,
-  sortedBacklog,
-  setSearchTerm,
-  setSortField,
-  moveToTodos,
-  sortBacklog,
-} = useTodos();
+import { ref, watch, computed } from "vue";
+const { filterBacklog, setSearchTerm, setSortField, moveToTodos, sortBacklog } =
+  useTodos();
 import { storeToRefs } from "pinia";
 const { backlog } = storeToRefs(useTodos());
 
-const handleSearch = (event) => {
-  setSearchTerm(event.target.value);
-};
+const searchTerm = ref("");
+
 const handleMoveToList = (todo) => {
   moveToTodos(todo);
 };
+
 const handleSortByDate = () => {
   setSortField("date");
   sortBacklog();
@@ -111,6 +122,12 @@ const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
+
+const filteredBacklog = computed(() => {
+  return backlog.value.filter((todo) =>
+    todo.text.toLowerCase().includes(searchTerm.value.toLowerCase())
+  );
+});
 </script>
 
 <style scoped>
