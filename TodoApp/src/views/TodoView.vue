@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { useTodos } from "@/stores/todos";
 import BacklogView from "./BacklogView.vue";
 import { storeToRefs } from "pinia";
+
 const newTodoText = ref("");
 
 const {
@@ -65,7 +66,6 @@ const formatDate = (dateString: string) => {
 watch(backlog, (newBacklog) => {
   console.log("Updated backlog:", newBacklog);
 });
-
 
 /* Toggle Dropdown */
 // const openDropdownIndexes = ref([]);
@@ -184,7 +184,4 @@ watch(backlog, (newBacklog) => {
     </div>
 </template>
 
-
-<style scoped>
-
-</style>
+<style scoped></style>
