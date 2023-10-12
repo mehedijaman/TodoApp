@@ -83,13 +83,13 @@ const toggleDropdown = (index: number) => {
 
 <template>
   <!-- <div class="w-screen"> -->
-    <div style="margin:0 auto;" class="max-w-lg border-b border-gray-200 dark:border-gray-700">
-        <ul class="flex flex-wrap text-center" id="myTab" data-tabs-toggle="#TodoAppTab" role="tablist">
+    <div style="margin:0 auto;" class="max-w-4xl border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex flex-wrap text-center items-left" id="myTab" data-tabs-toggle="#TodoAppTab" role="tablist">
             <li class="mr-2" role="presentation">
-                <button class="inline-block p-4 border-b-4 rounded-t-lg text-black" id="todo-tab" data-tabs-target="#todo" type="button" role="tab" aria-controls="todo" aria-selected="false">To Do List </button>
+                <button class="text-[28px] inline-block p-4 border-b-4 rounded-t-lg text-black font-bold" id="todo-tab" data-tabs-target="#todo" type="button" role="tab" aria-controls="todo" aria-selected="false">To Do List </button>
             </li>
             <li class="mr-2" role="presentation">
-                <button class="text-black inline-block p-4 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="backlog-tab" data-tabs-target="#backlog" type="button" role="tab" aria-controls="backlog" aria-selected="false">Backlog</button>
+                <button class="text-[28px] text-black inline-block p-4 border-b-4 border-transparent font-bold rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="backlog-tab" data-tabs-target="#backlog" type="button" role="tab" aria-controls="backlog" aria-selected="false">Backlog</button>
             </li>
         </ul>
     </div>
@@ -156,7 +156,7 @@ const toggleDropdown = (index: number) => {
 
         <form enctype="multipart/form-data" class="max-w-4xl w-full flex gap-2 mt-10 fixed bottom-2 pr-6">
             <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-[80%] text-[15px] p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
-            <input @click.prevent="handleAddTodo" class="w-[20%] p-2 bg-[#005FBC] text-[15px] text-white rounded-md hover:bg-[#0080FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
+            <input @click.prevent="handleAddTodo" class="w-[20%] p-2 text-[15px] text-white rounded-md bg-[#0080FF] hover:bg-[#41A0FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
         </form> 
       </div>
       <!-- /Tab Content -->
