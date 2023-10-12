@@ -84,17 +84,17 @@ const toggleDropdown = (index: number) => {
 <template>
   <!-- <div class="w-screen"> -->
     <div style="margin:0 auto;" class="max-w-lg border-b border-gray-200 dark:border-gray-700">
-        <ul class="flex flex-wrap text-sm font-medium text-center" id="myTab" data-tabs-toggle="#TodoAppTab" role="tablist">
+        <ul class="flex flex-wrap text-center" id="myTab" data-tabs-toggle="#TodoAppTab" role="tablist">
             <li class="mr-2" role="presentation">
-                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="todo-tab" data-tabs-target="#todo" type="button" role="tab" aria-controls="todo" aria-selected="false">To Do List </button>
+                <button class="inline-block p-4 border-b-4 rounded-t-lg text-black" id="todo-tab" data-tabs-target="#todo" type="button" role="tab" aria-controls="todo" aria-selected="false">To Do List </button>
             </li>
             <li class="mr-2" role="presentation">
-                <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="backlog-tab" data-tabs-target="#backlog" type="button" role="tab" aria-controls="backlog" aria-selected="false">Backlog</button>
+                <button class="text-black inline-block p-4 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="backlog-tab" data-tabs-target="#backlog" type="button" role="tab" aria-controls="backlog" aria-selected="false">Backlog</button>
             </li>
         </ul>
     </div>
     
-    <div id="TodoAppTab" style="margin:0 auto" class="max-w-lg flex flex-col justify-center">
+    <div id="TodoAppTab" style="margin:0 auto" class="max-w-4xl flex flex-col justify-center">
       <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="todo" role="tabpanel" aria-labelledby="todo-tab">
         <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
           <h2 id="accordion-flush-heading-1">
@@ -106,15 +106,15 @@ const toggleDropdown = (index: number) => {
             </button>
           </h2>
           <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
-            <div v-for="todo in completedTodos" :key="todo.id">
+            <div v-for="todo in completedTodos" :key="todo.id" class="mb-2">
               <label @click="handleMarkAsPending(todo)" class="flex items-center h-10 px-2 rounded cursor-pointer hover:bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-600">
                   <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
                 </svg>
 
                 <span>
-                  <span class="ml-4 text-sm">{{ todo.text }}</span>
-                  <p class="text-xs text-gray-500 px-4">{{ formatDate(todo.created_at) }}</p>
+                  <span class="ml-4 text-[#AAAAAA] text-[15px] line-through">{{ todo.text }}</span>
+                  <p class="text-[10px] text-gray-500 px-4">{{ formatDate(todo.created_at) }}</p>
                 </span>
               </label>	
             </div>
@@ -123,15 +123,15 @@ const toggleDropdown = (index: number) => {
         <!-- / Accordion -->
         <hr class="my-4">
     
-        <div v-for="(todo, index) in todos" :key="index" class="mb-10 flex justify-between">          
-          <span @click="handleMarkAsCompleted(todo)" class="flex items-center rounded cursor-pointer hover:bg-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600" viewBox="0 0 512 512">
+        <div v-for="(todo, index) in todos" :key="index" class="mb-2 flex justify-between">          
+          <span @click="handleMarkAsCompleted(todo)" class="flex items-center rounded cursor-pointer hover:bg-gray-100 pl-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-600 " viewBox="0 0 512 512">
               <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
             </svg>
 
             <span>
-              <span class="ml-4 text-sm">{{ todo.text }}</span>
-              <p class="text-xs text-gray-500 px-4"> {{ formatDate(todo.created_at) }}</p>
+              <span class="ml-4 text-[15px]">{{ todo.text }}</span>
+              <p class="text-[10px] text-gray-500 px-4"> {{ formatDate(todo.created_at) }}</p>
             </span>
           </span>
 
@@ -152,27 +152,11 @@ const toggleDropdown = (index: number) => {
                 </li>
               </ul>
           </div>
-          <!-- <span class="flex">
-            <button @click.prevent="handleSetBacklog(todo)">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3" />
-              </svg>            
-            </button>
-            <button @click.prevent="handleRemoveTodo(todo.id)" >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-              </svg>
-            </button>
-          </span> -->
         </div>
 
-        <form enctype="multipart/form-data" class="max-w-lg w-full grid grid-cols-12 gap-2 mt-10 fixed bottom-2">
-            <div class="col-span-6">
-                <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-full p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
-            </div>
-            <div class="col-span-4 flex items-center">
-                <input @click.prevent="handleAddTodo" class="p-2 w-full bg-[#005FBC] text-white rounded-md hover:bg-[#0080FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
-            </div>
+        <form enctype="multipart/form-data" class="max-w-4xl w-full flex gap-2 mt-10 fixed bottom-2 pr-6">
+            <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-[80%] text-[15px] p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
+            <input @click.prevent="handleAddTodo" class="w-[20%] p-2 bg-[#005FBC] text-[15px] text-white rounded-md hover:bg-[#0080FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
         </form> 
       </div>
       <!-- /Tab Content -->
@@ -186,4 +170,5 @@ const toggleDropdown = (index: number) => {
 
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
