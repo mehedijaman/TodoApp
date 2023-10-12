@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useTodos } from "@/stores/todos";
-import BacklogView from './BacklogView.vue';
+import BacklogView from "./BacklogView.vue";
+import { storeToRefs } from "pinia";
+const { todos, backlog, completedTodos } = storeToRefs(useTodos());
+const { addTodo, removeTodo, addToBacklog, removeBacklog, markAsCompleted } = useTodos();
 
 const newTodoText = ref("");
 
@@ -21,14 +24,19 @@ const {
 const handleAddTodo = () => {
   if (newTodoText.value.trim() !== "") {
     const created_at = new Date().toLocaleString();
-    addTodo({ text: newTodoText.value, created_at, state: "todo" });
+    addTodo({ text: newTodoText.value, created_at });
     newTodoText.value = "";
   }
 };
 
+watch(todos, (newTodos) => {
+  console.log("Updated todos:", newTodos);
+});
+
 const handleRemoveTodo = (id: number) => {
   console.log(`Removing todo with ID ${id}`);
   removeTodo(id);
+  console.log(todos); // Verify if the todo was removed
 };
 
 const handleSetBacklog = (todo) => {
@@ -56,11 +64,6 @@ const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString("en-US", options);
 };
-
-// Watch for changes in todos
-watch(todos, (newTodos) => {
-  console.log("Updated todos:", newTodos);
-});
 
 // Watch for changes in backlog
 watch(backlog, (newBacklog) => {
