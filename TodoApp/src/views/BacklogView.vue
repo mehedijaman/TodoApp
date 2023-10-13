@@ -1,32 +1,34 @@
 <template>
   <form
     enctype="multipart/form-data"
-    class="flex gap-2 mb-10"
+    class="flex flex-col md:flex-row gap-2 mb-10"
   >
     <!-- <div class="col-span-8"> -->
       <input
         v-model="searchTerm"
-        class="md:w-[60%] p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg rounded-md"
+        class="md:w-[65%] p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg rounded-md"
         type="text"
         name="task"
         placeholder="Search"
       />
     <!-- </div> -->
-    <button
-      @click="handleSortByName"
-      type="button"
-      class="w-[20%] justify-center col-span-2 text-white bg-[#0080FF] hover:bg-[#41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-[15px] px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      Sort by Name
-    </button>
+    <div class="flex justify-center">
+      <button
+        @click="handleSortByName"
+        type="button"
+        class="justify-center col-span-2 text-white text-[15px] bg-[#0080FF] hover:bg-[#41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Sort by Name
+      </button>
 
-    <button
-      @click="handleSortByDate"
-      type="button"
-      class="w-[20%] justify-center col-span-2 text-white bg-[#0080FF] hover:bg-[##41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-[15px]"
-    >
-      Sort by Date
-    </button>
+      <button
+        @click="handleSortByDate"
+        type="button"
+        class="justify-center col-span-2 text-white text-[15px] bg-[#0080FF] hover:bg-[##41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Sort by Date
+      </button>
+    </div>
   </form>
 
   <div v-if="filteredBacklog.length">
@@ -50,7 +52,7 @@
 
       <button
         @click="() => handleMoveToList(todo)"
-        class="p-2 text-sm font-medium text-center text-[#0080FF] ring-1 ring-[#AAAAAA] bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        class="h-8 px-2 text-[15px] text-center text-[#0080FF] ring-1 ring-[#AAAAAA] bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         type="button"
       >
         Move to List
@@ -58,6 +60,7 @@
     </div>
   </div>
   <p v-else class="text-[15px]">No backlog items found.</p>
+  <AddForm></AddForm>
 </template>
 
 <script setup lang="ts">
@@ -66,6 +69,9 @@ import { ref, watch, computed } from "vue";
 const { filterBacklog, setSearchTerm, setSortField, moveToTodos, sortBacklog } =
   useTodos();
 import { storeToRefs } from "pinia";
+import AddForm from '@/components/AddForm.vue';
+
+
 const { backlog } = storeToRefs(useTodos());
 
 const searchTerm = ref("");

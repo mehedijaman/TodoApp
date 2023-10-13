@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { useTodos } from "@/stores/todos";
 import BacklogView from "./BacklogView.vue";
 import { storeToRefs } from "pinia";
+import AddForm from "@/components/AddForm.vue";
 
 const newTodoText = ref("");
 
@@ -118,10 +119,11 @@ const toggleDropdown = (index: number) => {
                 </span>
               </label>	
             </div>
+            <hr class="my-4">
           </div>  
         </div>
         <!-- / Accordion -->
-        <hr class="my-4">
+        
     
         <div v-for="(todo, index) in todos" :key="index" class="mb-2 flex justify-between">          
           <span @click="handleMarkAsCompleted(todo)" class="flex items-center rounded cursor-pointer hover:bg-gray-100 pl-3">
@@ -138,7 +140,7 @@ const toggleDropdown = (index: number) => {
 
           <span class="flex flex-col">
             <button @click="toggleDropdown(index)" :id="`dropDownMenuBtn-${index}`" :data-dropdown-toggle="`dropdownDotsHorizontal-${index}`" class="inline-flex items-end p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-[50%] hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
-              <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+              <svg class="w-8 h-8 text-[#AAAAAA] hover:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
                 <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
               </svg>
             </button>
@@ -156,10 +158,7 @@ const toggleDropdown = (index: number) => {
           </span>
         </div>
 
-        <form enctype="multipart/form-data" class="max-w-4xl w-full flex gap-2 mt-10 fixed bottom-6 pr-6">
-            <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-[85%] text-[15px] p-2 border-[#AAAAAA] focus:outline-none focus:border-[#AAAAAA] focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
-            <input @click.prevent="handleAddTodo" class="w-[15%]  text-[15px] text-white rounded-md bg-[#0080FF] hover:bg-[#41A0FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
-        </form> 
+        <AddForm></AddForm>
       </div>
       <!-- /Tab Content -->
 
