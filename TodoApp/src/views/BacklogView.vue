@@ -1,21 +1,21 @@
 <template>
   <form
     enctype="multipart/form-data"
-    class="w-full grid grid-cols-12 gap-2 mb-10"
+    class="flex gap-2 mb-10"
   >
-    <div class="col-span-6">
+    <!-- <div class="col-span-8"> -->
       <input
         v-model="searchTerm"
-        class="w-full p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg rounded-md"
+        class="md:w-[60%] p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg rounded-md"
         type="text"
         name="task"
         placeholder="Search"
       />
-    </div>
+    <!-- </div> -->
     <button
       @click="handleSortByName"
       type="button"
-      class="col-span-3 w-full text-white bg-[#0080FF] hover:bg-[#41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-xs"
+      class="w-[20%] justify-center col-span-2 text-white bg-[#0080FF] hover:bg-[#41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-[15px] px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
     >
       Sort by Name
     </button>
@@ -23,7 +23,7 @@
     <button
       @click="handleSortByDate"
       type="button"
-      class="col-span-3 w-full text-white bg-[#0080FF] hover:bg-[##41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-xs"
+      class="w-[20%] justify-center col-span-2 text-white bg-[#0080FF] hover:bg-[##41A0FF] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-[15px]"
     >
       Sort by Date
     </button>
@@ -36,14 +36,8 @@
       class="mb-2 flex justify-between"
     >
       <span class="flex items-center rounded cursor-pointer hover:bg-gray-100">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-4 h-4 text-blue-600"
-          viewBox="0 0 512 512"
-        >
-          <path
-            d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5 text-[#AAAAAA]" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
         </svg>
 
         <span>
@@ -56,7 +50,7 @@
 
       <button
         @click="() => handleMoveToList(todo)"
-        class="p-2 text-sm font-medium text-center text-blue-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        class="p-2 text-sm font-medium text-center text-[#0080FF] ring-1 ring-[#AAAAAA] bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         type="button"
       >
         Move to List

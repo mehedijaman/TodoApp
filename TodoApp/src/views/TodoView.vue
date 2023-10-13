@@ -89,13 +89,13 @@ const toggleDropdown = (index: number) => {
                 <button class="text-[28px] inline-block p-4 border-b-4 rounded-t-lg text-black font-bold" id="todo-tab" data-tabs-target="#todo" type="button" role="tab" aria-controls="todo" aria-selected="false">To Do List </button>
             </li>
             <li class="mr-2" role="presentation">
-                <button class="text-[28px] text-black inline-block p-4 border-b-4 border-transparent font-bold rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="backlog-tab" data-tabs-target="#backlog" type="button" role="tab" aria-controls="backlog" aria-selected="false">Backlog</button>
+                <button class="text-[28px] text-black inline-block p-4 border-b-4  font-bold rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="backlog-tab" data-tabs-target="#backlog" type="button" role="tab" aria-controls="backlog" aria-selected="false">Backlog</button>
             </li>
         </ul>
     </div>
     
     <div id="TodoAppTab" style="margin:0 auto" class="max-w-4xl flex flex-col justify-center">
-      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="todo" role="tabpanel" aria-labelledby="todo-tab">
+      <div class="hidden p-4 rounded-lg dark:bg-gray-800" id="todo" role="tabpanel" aria-labelledby="todo-tab">
         <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white bg-opacity-25 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
           <h2 id="accordion-flush-heading-1">
             <button type="button" class="flex items-center justify-between w-full px-5 py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
@@ -125,9 +125,10 @@ const toggleDropdown = (index: number) => {
     
         <div v-for="(todo, index) in todos" :key="index" class="mb-2 flex justify-between">          
           <span @click="handleMarkAsCompleted(todo)" class="flex items-center rounded cursor-pointer hover:bg-gray-100 pl-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-600 " viewBox="0 0 512 512">
-              <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5 text-[#AAAAAA]" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
             </svg>
+            
 
             <span>
               <span class="ml-4 text-[15px]">{{ todo.text }}</span>
@@ -135,33 +136,34 @@ const toggleDropdown = (index: number) => {
             </span>
           </span>
 
-          
-          <button @click="toggleDropdown(index)" :id="`dropDownMenuBtn-${index}`" :data-dropdown-toggle="`dropdownDotsHorizontal-${index}`" class="inline-flex items-end p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-            </svg>
-          </button>
+          <span class="flex flex-col">
+            <button @click="toggleDropdown(index)" :id="`dropDownMenuBtn-${index}`" :data-dropdown-toggle="`dropdownDotsHorizontal-${index}`" class="inline-flex items-end p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-[50%] hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
+              <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+              </svg>
+            </button>
 
-          <div :id="`dropdownDotsHorizontal-${index}`"  v-if="showDropdowns[index]" class="bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ">
-              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" :aria-labelledby="`dropDownMenuBtn-${index}`">
-                <li>
-                  <a @click.prevent="handleRemoveTodo(todo.id)" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                </li>
-                <li>
-                  <a @click.prevent="handleSetBacklog(todo)" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Move to Backlog</a>
-                </li>
-              </ul>
-          </div>
+            <div :id="`dropdownDotsHorizontal-${index}`"  v-show="showDropdowns[index]" class="absolute mt-10 bg-white">
+                <ul class="py-2 text-sm text-[#0080FF]" :aria-labelledby="`dropDownMenuBtn-${index}`">
+                  <li class="border-2">
+                    <a @click.prevent="handleRemoveTodo(todo.id)" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                  </li>
+                  <li class="border-2 border-t-0">
+                    <a @click.prevent="handleSetBacklog(todo)" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Move to Backlog</a>
+                  </li>
+                </ul>
+            </div>
+          </span>
         </div>
 
-        <form enctype="multipart/form-data" class="max-w-4xl w-full flex gap-2 mt-10 fixed bottom-2 pr-6">
-            <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-[80%] text-[15px] p-2 border focus:outline-none focus:border-green-200 focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
-            <input @click.prevent="handleAddTodo" class="w-[20%] p-2 text-[15px] text-white rounded-md bg-[#0080FF] hover:bg-[#41A0FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
+        <form enctype="multipart/form-data" class="max-w-4xl w-full flex gap-2 mt-10 fixed bottom-6 pr-6">
+            <input v-model="newTodoText" @keyup.enter="handleAddTodo" class="w-[85%] text-[15px] p-2 border-[#AAAAAA] focus:outline-none focus:border-[#AAAAAA] focus:shadow-lg" type="text" name="task" placeholder="Enter new Task Description">
+            <input @click.prevent="handleAddTodo" class="w-[15%]  text-[15px] text-white rounded-md bg-[#0080FF] hover:bg-[#41A0FF]  hover:cursor-pointer" type="submit" name="submit" value="Add Item">
         </form> 
       </div>
       <!-- /Tab Content -->
 
-      <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="backlog" role="tabpanel" aria-labelledby="backlog-tab">
+      <div class="hidden p-4 rounded-lg dark:bg-gray-800" id="backlog" role="tabpanel" aria-labelledby="backlog-tab">
         <BacklogView/>
       </div>
       <!-- /Tab Content -->
