@@ -34,14 +34,14 @@ watch(todos, (newTodos) => {
 const handleRemoveTodo = (id: number) => {
   console.log(`Removing todo with ID ${id}`);
   removeTodo(id);
-  showDropdowns.value = [];
+  showDropdown.value = null;
   console.log(todos); // Verify if the todo was removed
 };
 
 const handleSetBacklog = (todo) => {
   console.log(`Setting todo with ID ${todo.id} to backlog`);
   addToBacklog(todo);
-  showDropdowns.value = [];
+  showDropdown.value = null;
 };
 
 const handleMarkAsCompleted = (todo) => {
@@ -71,21 +71,21 @@ watch(backlog, (newBacklog) => {
 });
 
 /* Toggle Dropdown */
-const showDropdowns = ref([]);
+const showDropdown = ref<number | null>(null);
 
 const toggleDropdown = (index: number) => {
-  if (showDropdowns.value[index]) {
-    showDropdowns.value[index] = false;
+  if (showDropdown.value === index) {
+    showDropdown.value = null;
   } else {
-    showDropdowns.value[index] = true;
+    showDropdown.value = index;
   }
 };
 </script>
 
 <template>
-  <!-- <div class="w-screen"> -->
-    <div style="margin:0 auto;" class="max-w-4xl border-b border-gray-200 dark:border-gray-700">
-        <ul class="flex flex-wrap text-center items-left" id="myTab" data-tabs-toggle="#TodoAppTab" role="tablist">
+  <!-- <div class="flex flex-col items-center justify-center w-screen"> -->
+    <div class="max-w-4xl mx-auto border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex" id="myTab" data-tabs-toggle="#TodoAppTab" role="tablist">
             <li class="mr-2" role="presentation">
                 <button class="text-[28px] inline-block p-4 border-b-4 rounded-t-lg text-black font-bold" id="todo-tab" data-tabs-target="#todo" type="button" role="tab" aria-controls="todo" aria-selected="false">To Do List </button>
             </li>
@@ -94,8 +94,9 @@ const toggleDropdown = (index: number) => {
             </li>
         </ul>
     </div>
-    
-    <div id="TodoAppTab" style="margin:0 auto" class="max-w-4xl flex flex-col justify-center">
+  <!-- </div> -->
+  
+  <div id="TodoAppTab" class="max-w-4xl" style="margin:0 auto;">
       <div class="hidden p-4 rounded-lg dark:bg-gray-800" id="todo" role="tabpanel" aria-labelledby="todo-tab">
         <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white bg-opacity-25 dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
           <h2 id="accordion-flush-heading-1">
@@ -123,7 +124,6 @@ const toggleDropdown = (index: number) => {
           </div>  
         </div>
         <!-- / Accordion -->
-        
     
         <div v-for="(todo, index) in todos" :key="index" class="mb-2 flex justify-between">          
           <span @click="handleMarkAsCompleted(todo)" class="flex items-center rounded cursor-pointer hover:bg-gray-100 pl-3">
@@ -145,7 +145,7 @@ const toggleDropdown = (index: number) => {
               </svg>
             </button>
 
-            <div :id="`dropdownDotsHorizontal-${index}`"  v-show="showDropdowns[index]" class="absolute mt-10 bg-white">
+            <div :id="`dropdownDotsHorizontal-${index}`"  v-show="showDropdown == index" class="absolute right-0 md:right-80  mt-10 bg-white">
                 <ul class="py-2 text-sm text-[#0080FF]" :aria-labelledby="`dropDownMenuBtn-${index}`">
                   <li class="border-2">
                     <a @click.prevent="handleRemoveTodo(todo.id)" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
@@ -165,10 +165,8 @@ const toggleDropdown = (index: number) => {
       <div class="hidden p-4 rounded-lg dark:bg-gray-800" id="backlog" role="tabpanel" aria-labelledby="backlog-tab">
         <BacklogView/>
       </div>
-      <!-- /Tab Content -->
-    </div>
-  <!-- </div> -->
-
+    <!-- /Tab Content -->
+  </div>
 </template>
 
 <style scoped>
